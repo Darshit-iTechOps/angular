@@ -1,0 +1,43 @@
+.login-container {
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  left: 50%;
+  top: 50%;
+  margin: 0;
+  transform: translate(-50%, -50%);
+
+  & .box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 20px;
+
+    & .header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    & .form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      & button {
+        margin: 20px;
+      }
+    }
+
+    & .body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+}
