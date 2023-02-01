@@ -28,7 +28,7 @@ namespace testproject.api.Migrations
                     DeptId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ManagerId = table.Column<int>(type: "int", nullable: false),
+                    ManagerId = table.Column<int>(type: "int", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -69,6 +69,25 @@ namespace testproject.api.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "hr",
+                columns: table => new
+                {
+                    HRId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EmpId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_hr", x => x.HRId);
+                    table.ForeignKey(
+                        name: "FK_hr_employee_EmpId",
+                        column: x => x.EmpId,
+                        principalTable: "employee",
+                        principalColumn: "EmpId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "manager",
                 columns: table => new
                 {
@@ -102,6 +121,16 @@ namespace testproject.api.Migrations
                 columns: new[] { "RoleID", "Name" },
                 values: new object[] { 3, "HR" });
 
+            migrationBuilder.InsertData(
+                table: "employee",
+                columns: new[] { "EmpId", "DeptId", "Email", "FirstName", "LastName", "ManagerId", "Password", "RoleID", "Status", "TelNo" },
+                values: new object[] { 1, null, "john@mail.com", "John", "Doe", null, "doe100", 3, true, "555-555-5555" });
+
+            migrationBuilder.InsertData(
+                table: "hr",
+                columns: new[] { "HRId", "EmpId" },
+                values: new object[] { 1, 1 });
+
             migrationBuilder.CreateIndex(
                 name: "IX_department_ManagerId",
                 table: "department",
@@ -123,6 +152,11 @@ namespace testproject.api.Migrations
                 column: "RoleID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_hr_EmpId",
+                table: "hr",
+                column: "EmpId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_manager_EmpId",
                 table: "manager",
                 column: "EmpId",
@@ -133,8 +167,7 @@ namespace testproject.api.Migrations
                 table: "department",
                 column: "ManagerId",
                 principalTable: "manager",
-                principalColumn: "ManagerId",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "ManagerId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_employee_manager_ManagerId",
@@ -153,6 +186,9 @@ namespace testproject.api.Migrations
             migrationBuilder.DropForeignKey(
                 name: "FK_employee_manager_ManagerId",
                 table: "employee");
+
+            migrationBuilder.DropTable(
+                name: "hr");
 
             migrationBuilder.DropTable(
                 name: "manager");

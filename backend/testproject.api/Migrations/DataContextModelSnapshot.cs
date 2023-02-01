@@ -30,7 +30,7 @@ namespace testproject.api.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DeptId"), 1L, 1);
 
-                    b.Property<int>("ManagerId")
+                    b.Property<int?>("ManagerId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -95,6 +95,44 @@ namespace testproject.api.Migrations
                     b.HasIndex("RoleID");
 
                     b.ToTable("employee");
+
+                    b.HasData(
+                        new
+                        {
+                            EmpId = 1,
+                            Email = "john@mail.com",
+                            FirstName = "John",
+                            LastName = "Doe",
+                            Password = "doe100",
+                            RoleID = 3,
+                            Status = true,
+                            TelNo = "555-555-5555"
+                        });
+                });
+
+            modelBuilder.Entity("testproject.api.Models.HR", b =>
+                {
+                    b.Property<int>("HRId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("HRId"), 1L, 1);
+
+                    b.Property<int>("EmpId")
+                        .HasColumnType("int");
+
+                    b.HasKey("HRId");
+
+                    b.HasIndex("EmpId");
+
+                    b.ToTable("hr");
+
+                    b.HasData(
+                        new
+                        {
+                            HRId = 1,
+                            EmpId = 1
+                        });
                 });
 
             modelBuilder.Entity("testproject.api.Models.Manager", b =>
@@ -154,9 +192,7 @@ namespace testproject.api.Migrations
                 {
                     b.HasOne("testproject.api.Models.Manager", "Manager")
                         .WithMany()
-                        .HasForeignKey("ManagerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ManagerId");
 
                     b.Navigation("Manager");
                 });
@@ -182,6 +218,17 @@ namespace testproject.api.Migrations
                     b.Navigation("Manager");
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("testproject.api.Models.HR", b =>
+                {
+                    b.HasOne("testproject.api.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmpId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Employee");
                 });
 
             modelBuilder.Entity("testproject.api.Models.Manager", b =>

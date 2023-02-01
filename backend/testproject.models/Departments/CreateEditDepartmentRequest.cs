@@ -2,6 +2,6 @@ namespace testproject.models.Departments;
 
 public record CreateEditDepartmentRequest(
     string Name,
-    int ManagerId,
+    int? ManagerId,
     bool Status
 );

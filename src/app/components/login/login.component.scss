@@ -19,6 +19,11 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      flex-direction: column;
+
+      & p {
+        color: red;
+      }
     }
 
     & .form {
@@ -29,6 +34,15 @@
 
       & button {
         margin: 20px;
+        border: none;
+        background: lightblue;
+        color: blue;
+        transition: 0.5s ease-in-out;
+
+        &:hover {
+          color: white;
+          background: blueviolet;
+        }
       }
     }
 
@@ -37,6 +51,17 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+    }
+
+    & a {
+      text-decoration: none;
+      transition: 0.5s ease-in-out;
+      text-transform: uppercase;
+
+      &:hover {
+        color: crimson;
+        letter-spacing: 1.5px;
+      }
     }
   }
 

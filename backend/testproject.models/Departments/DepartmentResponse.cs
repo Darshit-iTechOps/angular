@@ -5,6 +5,6 @@ namespace testproject.models.Departments;
 public record DepartmentResponse(
     int DeptId,
     string Name,
-    int ManagerId,
+    int? ManagerId,
     bool Status
 );

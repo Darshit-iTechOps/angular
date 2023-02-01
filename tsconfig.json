@@ -7,7 +7,9 @@
       "@components/*": ["./src/app/components/*"],
       "@models/*": ["./src/app/models/*"],
       "@services/*": ["./src/app/services/*"],
-      "@hooks/*": ["./src/app/hooks/*"]
+      "@hooks/*": ["./src/app/hooks/*"],
+      "@auth/*": ["./src/app/auth/*"],
+      "@helpers/*": ["./src/app/helpers/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,

@@ -15,7 +15,7 @@ builder.Services.AddDbContext<DataContext>(option => option.UseSqlServer(connect
 builder.Services.AddScoped<IRoleService, RoleService>();
 builder.Services.AddScoped<IDepartmentService, DepartmentService>();
 builder.Services.AddScoped<IManagerService, ManagerService>();
-
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
 var jwtSection = builder.Configuration.GetSection("JwtSettings");
 builder.Services.Configure<JwtSettings>(jwtSection);
@@ -25,22 +25,22 @@ var key = Encoding.UTF8.GetBytes(appSettings.SecretKey);
 
 builder.Services.AddAuthentication(x =>
 {
-    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-    x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+  x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+  x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+  x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(x =>
 {
-    x.SaveToken = true;
-    x.RequireHttpsMetadata = false;
-    x.TokenValidationParameters = new TokenValidationParameters()
-    {
-        ValidateIssuer = false,
-        ValidateAudience = false,
-        ValidateLifetime = true,
-        ValidateIssuerSigningKey = true,
-        ClockSkew = TimeSpan.Zero,
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"])),
-    };
+  x.SaveToken = true;
+  x.RequireHttpsMetadata = false;
+  x.TokenValidationParameters = new TokenValidationParameters()
+  {
+    ValidateIssuer = false,
+    ValidateAudience = false,
+    ValidateLifetime = true,
+    ValidateIssuerSigningKey = true,
+    ClockSkew = TimeSpan.Zero,
+    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtSettings:SecretKey"])),
+  };
 });
 
 builder.Services.AddSwaggerGen(option =>
@@ -81,16 +81,16 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
-    app.UseDeveloperExceptionPage();
+  app.UseSwagger();
+  app.UseSwaggerUI();
+  app.UseDeveloperExceptionPage();
 }
 else
-    app.UseHsts();
+  app.UseHsts();
 
 app.UseCors(options =>
 {
-    options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+  options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
 });
 app.UseExceptionHandler("/error");
 
@@ -104,10 +104,10 @@ app.MapControllers();
 
 using (var scope = app.Services.CreateScope())
 {
-    var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<DataContext>();
-    if (!context.Database.CanConnect())
-        context.Database.Migrate();
+  var services = scope.ServiceProvider;
+  var context = services.GetRequiredService<DataContext>();
+  if (!context.Database.CanConnect())
+    context.Database.Migrate();
 }
 
 app.Run();
