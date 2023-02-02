@@ -1,1 +1,8 @@
-<p>dashboard works!</p>
+<app-layout [role]="role">
+  <div *ngFor="let route of routes">
+    <button mat-menu-item [routerLink]="[route.route]">{{route.name}}</button>
+  </div>
+</app-layout>
+<app-employee-dashboard *ngIf="activate_employee"></app-employee-dashboard>
+<app-hr-dashboard *ngIf="activate_hr"></app-hr-dashboard>
+<app-manager-dashboard *ngIf="activate_manager"></app-manager-dashboard>

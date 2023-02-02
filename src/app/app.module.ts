@@ -10,7 +10,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from '@components/login/login.component';
 import { RegisterComponent } from '@components/register/register.component';
 import { DashboardComponent } from '@components/dashboard/dashboard.component';
-
+import { LayoutComponent } from '@components/layout/layout.component';
+import { EmployeeDashboardComponent } from '@components/dashboard/employee-dashboard/employee-dashboard.component';
+import { HrDashboardComponent } from '@components/dashboard/hr-dashboard/hr-dashboard.component';
+import { ManagerDashboardComponent } from '@components/dashboard/manager-dashboard/manager-dashboard.component';
 // Services
 import { RoleService } from '@services/role.service';
 import { EmployeeService } from '@services/employee.service';
@@ -26,6 +29,10 @@ import {
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
+    LayoutComponent,
+    EmployeeDashboardComponent,
+    HrDashboardComponent,
+    ManagerDashboardComponent,
   ],
   imports: [
     BrowserModule,

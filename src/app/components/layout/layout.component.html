@@ -1,0 +1,8 @@
+<mat-toolbar color="primary" class="toolbar">
+  <button mat-raised-button color="basic" [matMenuTriggerFor]="menu">MENU</button>
+  <mat-menu #menu="matMenu">
+    <ng-content></ng-content>
+  </mat-menu>
+  <span>{{role}}</span>
+  <button mat-raised-button (click)="logout()" color="warn" class="logout">Logout</button>
+</mat-toolbar>

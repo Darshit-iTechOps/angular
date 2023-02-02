@@ -1,0 +1,11 @@
+.toolbar {
+  justify-content: space-between;
+
+  & span {
+    align-items: center;
+  }
+
+  & .logout {
+    align-items: flex-end;
+  }
+}
