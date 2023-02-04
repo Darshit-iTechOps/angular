@@ -1,0 +1,8 @@
+<app-hr-dashboard>
+  <p>hr-roles works!</p>
+  <div *ngIf="isLoading$ | async">Loading...</div>
+  <div *ngIf="error$ | async">{{error$}}</div>
+  <div *ngFor="let role of roles$ | async">
+    {{role.name}}
+  </div>
+</app-hr-dashboard>

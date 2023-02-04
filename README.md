@@ -1,6 +1,6 @@
 # AngularStack
 
-## STATUS : **IN PROGRESS**
+## STATUS : **IN PROGRESS** - **Update** : Added Ngrx Store and layout  
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.1.
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { StorageHelper } from '@helpers/StorageHelper';
+import { StorageHelper } from '@helpers/StorageHelper.helper';
 
 @Component({
   selector: 'app-dashboard',

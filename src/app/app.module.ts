@@ -1,8 +1,11 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AngularMaterialModule } from './angular-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { StoreModule } from '@ngrx/store';
+import { roleReducer } from '@reducers/roles.reducer';
 
 import { AppRoutingModule, routedComponents } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +17,8 @@ import { LayoutComponent } from '@components/layout/layout.component';
 import { EmployeeDashboardComponent } from '@components/dashboard/employee-dashboard/employee-dashboard.component';
 import { HrDashboardComponent } from '@components/dashboard/hr-dashboard/hr-dashboard.component';
 import { ManagerDashboardComponent } from '@components/dashboard/manager-dashboard/manager-dashboard.component';
+import { HrRolesComponent } from '@components/dashboard/hr-dashboard/hr-roles/hr-roles.component';
+import { HrManagersComponent } from '@components/dashboard/hr-dashboard/hr-managers/hr-managers.component';
 // Services
 import { RoleService } from '@services/role.service';
 import { EmployeeService } from '@services/employee.service';
@@ -22,6 +27,9 @@ import {
   ErrorStateMatcher,
   ShowOnDirtyErrorStateMatcher,
 } from '@angular/material/core';
+import { JWTInterceptor } from './interceptor/jwt.interceptor';
+import { EffectsModule } from '@ngrx/effects';
+import { RolesEffect } from '@effects/roles.effect';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,6 +41,8 @@ import {
     EmployeeDashboardComponent,
     HrDashboardComponent,
     ManagerDashboardComponent,
+    HrRolesComponent,
+    HrManagersComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,12 +52,21 @@ import {
     AngularMaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    EffectsModule.forRoot({}),
+    StoreModule.forRoot({ roles: roleReducer }),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: !isDevMode(),
+      autoPause: true,
+    }),
+    EffectsModule.forFeature([RolesEffect]),
   ],
   providers: [
     RoleService,
     EmployeeService,
     DepartmentService,
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher },
+    { provide: HTTP_INTERCEPTORS, useClass: JWTInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

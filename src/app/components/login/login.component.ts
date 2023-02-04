@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MyErrorStateMatcher } from '@hooks/MyErrorStateMatcher';
-import { Login, LoginResponse } from '@models/login';
+import { MyErrorStateMatcher } from '@hooks/MyErrorStateMatcher.hook';
+import { Login, LoginResponse } from '@models/login.model';
 import { LoginService } from '@services/login.service';
-import { StorageHelper } from '@helpers/StorageHelper';
+import { StorageHelper } from '@helpers/StorageHelper.helper';
 
 @Component({
   selector: 'app-login',
@@ -24,7 +24,7 @@ export class LoginComponent {
   errors: string = '';
 
   constructor(private service: LoginService, private router: Router) {
-    this.login = new Login();
+    // this.login = new Login();
   }
 
   authLogin(): void {

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Login, LoginResponse } from '@models/login';
+import { Login, LoginResponse } from '@models/login.model';
 import { Observable } from 'rxjs';
 import { environment } from '../environments/environment';
-import { httpOptions } from '@helpers/HeaderHelper';
+import { httpOptions } from '@helpers/HeaderHelper.helper';
 
 @Injectable({
   providedIn: 'root',

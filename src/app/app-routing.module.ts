@@ -4,6 +4,8 @@ import { AuthGuard } from '@auth/auth.guard';
 import { LoginComponent } from '@components/login/login.component';
 import { RegisterComponent } from '@components/register/register.component';
 import { DashboardComponent } from '@components/dashboard/dashboard.component';
+import { HrRolesComponent } from '@components/dashboard/hr-dashboard/hr-roles/hr-roles.component';
+import { HrManagersComponent } from '@components/dashboard/hr-dashboard/hr-managers/hr-managers.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -12,6 +14,10 @@ const routes: Routes = [
     path: 'dashboard',
     component: DashboardComponent,
     canActivate: [AuthGuard],
+    children: [
+      { path: 'hr/roles', component: HrRolesComponent },
+      { path: 'hr/managers', component: HrManagersComponent },
+    ],
   },
 ];
 
@@ -25,4 +31,6 @@ export const routedComponents = [
   LoginComponent,
   RegisterComponent,
   DashboardComponent,
+  HrRolesComponent,
+  HrManagersComponent,
 ];

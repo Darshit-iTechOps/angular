@@ -7,7 +7,7 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { StorageHelper } from '@helpers/StorageHelper';
+import { StorageHelper } from '@helpers/StorageHelper.helper';
 
 @Injectable({
   providedIn: 'root',

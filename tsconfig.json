@@ -9,7 +9,11 @@
       "@services/*": ["./src/app/services/*"],
       "@hooks/*": ["./src/app/hooks/*"],
       "@auth/*": ["./src/app/auth/*"],
-      "@helpers/*": ["./src/app/helpers/*"]
+      "@helpers/*": ["./src/app/helpers/*"],
+      "@actions/*": ["./src/app/actions/*"],
+      "@reducers/*": ["./src/app/reducers/*"],
+      "@selectors/*": ["./src/app/selectors/*"],
+      "@effects/*": ["./src/app/effects/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
