@@ -30,6 +30,8 @@ import {
 import { JWTInterceptor } from './interceptor/jwt.interceptor';
 import { EffectsModule } from '@ngrx/effects';
 import { RolesEffect } from '@effects/roles.effect';
+import { loginReducer } from '@reducers/login.reducer';
+import { LoginEffect } from '@effects/login.effect';
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,13 +55,13 @@ import { RolesEffect } from '@effects/roles.effect';
     FormsModule,
     ReactiveFormsModule,
     EffectsModule.forRoot({}),
-    StoreModule.forRoot({ roles: roleReducer }),
+    StoreModule.forRoot({ roles: roleReducer, login: loginReducer }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: !isDevMode(),
       autoPause: true,
     }),
-    EffectsModule.forFeature([RolesEffect]),
+    EffectsModule.forFeature([LoginEffect, RolesEffect]),
   ],
   providers: [
     RoleService,

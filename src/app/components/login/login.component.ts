@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { MyErrorStateMatcher } from '@hooks/MyErrorStateMatcher.hook';
-import { Login, LoginResponse } from '@models/login.model';
-import { LoginService } from '@services/login.service';
-import { StorageHelper } from '@helpers/StorageHelper.helper';
-
+import { Login } from '@models/login.model';
+import { AppState } from '../../../app/app.state';
+import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { errorSelector } from '@selectors/login.selector';
+import * as LoginActions from '@actions/login.action';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -18,41 +19,15 @@ export class LoginComponent {
   ]);
   login: Login = new Login();
   matcher = new MyErrorStateMatcher();
+  error$: Observable<string> = this.store.pipe(select(errorSelector));
 
-  storageHelper: StorageHelper = new StorageHelper();
-  hasErrors: boolean = false;
-  errors: string = '';
-
-  constructor(private service: LoginService, private router: Router) {
-    // this.login = new Login();
-  }
+  constructor(private store: Store<AppState>) {}
 
   authLogin(): void {
-    this.service.LoginRequest(this.login).subscribe({
-      next: (response) => this.prepareRedirect(response),
-      error: (error) => {
-        this.hasErrors = true;
-        this.errors = error.error;
-        this.login = new Login();
-        this.storageHelper.ClearStorage();
-      },
-    });
-  }
-
-  prepareRedirect(response: LoginResponse): void {
-    if (Object.keys(response).length > 0) {
-      this.storageHelper.SetToken(response.token);
-      this.storageHelper.SetID(response.user.empId);
-      this.storageHelper.SetRole(response.user.role.name);
-      this.storageHelper.SetLoggedIn(true);
-      this.router.navigate(['/dashboard'], {
-        queryParams: { user: response.user.empId },
-      });
-    }
+    this.store.dispatch(LoginActions.loginRequest({ login: this.login }));
   }
 
   handleChange(): void {
-    this.hasErrors = false;
-    this.errors = '';
+    this.error$;
   }
 }

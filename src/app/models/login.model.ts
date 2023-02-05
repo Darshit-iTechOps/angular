@@ -16,6 +16,12 @@ export type User = {
   status: boolean;
 };
 
+export interface LoginState {
+  isLoading: boolean;
+  response: LoginResponse | null;
+  error: string;
+}
+
 export type LoginResponse = {
   token: string;
   user: User;

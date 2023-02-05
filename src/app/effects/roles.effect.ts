@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { createEffect } from '@ngrx/effects';
-import { Actions, ofType } from '@ngrx/effects';
+import { Actions, ofType, createEffect  } from '@ngrx/effects';
 import * as RoleActions from '@actions/roles.action';
 import { catchError, map, mergeMap, of } from 'rxjs';
 import { RoleService } from '@services/role.service';

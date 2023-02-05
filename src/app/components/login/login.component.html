@@ -2,7 +2,7 @@
   <mat-card class="box">
     <mat-card-header class="header">
       <mat-card-title>Login</mat-card-title>
-      <p *ngIf="hasErrors">{{errors}}</p>
+      <p *ngIf="error$ | async">{{error$ | async }}</p>
     </mat-card-header>
     <form class="form" (ngSubmit)="authLogin()" [noValidate]="false">
       <mat-card-content class="body">
