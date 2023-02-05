@@ -19,7 +19,7 @@ export class LoginComponent {
   ]);
   login: Login = new Login();
   matcher = new MyErrorStateMatcher();
-  error$: Observable<string> = this.store.pipe(select(errorSelector));
+  // error$: Observable<string> = this.store.pipe(select(errorSelector));
 
   constructor(private store: Store<AppState>) {}
 
@@ -28,6 +28,6 @@ export class LoginComponent {
   }
 
   handleChange(): void {
-    this.error$;
+    // this.error$;
   }
 }

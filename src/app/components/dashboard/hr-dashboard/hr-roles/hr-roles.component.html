@@ -1,8 +1,43 @@
 <app-hr-dashboard>
-  <p>hr-roles works!</p>
-  <div *ngIf="isLoading$ | async">Loading...</div>
+  <!-- <p>hr-roles works!</p> -->
   <div *ngIf="error$ | async">{{error$}}</div>
-  <div *ngFor="let role of roles$ | async">
-    {{role.name}}
+  <div *ngIf="isLoading$ | async">Loading...</div>
+  <br />
+  <div class="btn-container">
+    <button mat-raised-button color="success" class="btn-block">Add Role</button>
   </div>
+  <br />
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+
+      <ng-container matColumnDef="roleID">
+        <th mat-header-cell *matHeaderCellDef> Id </th>
+        <td mat-cell *matCellDef="let role">{{role.roleID}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Name </th>
+        <td mat-cell *matCellDef="let role">{{role.name}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let role">
+          <button>Edit</button>
+          <button>Delete</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    </table>
+    <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons aria-label="Select page of roles">
+    </mat-paginator>
+  </div>
+
+  <!-- <div *ngFor="let role of roles$ | async">
+    {{role.name}}
+  </div> -->
 </app-hr-dashboard>
