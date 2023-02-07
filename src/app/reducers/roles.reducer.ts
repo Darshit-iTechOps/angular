@@ -1,7 +1,6 @@
 import { RoleState } from '@models/roles.model';
 import { createReducer, on } from '@ngrx/store';
 import * as RolesActions from '@actions/roles.action';
-import { retry } from 'rxjs';
 
 export const initialState: RoleState = {
   isLoading: false,
@@ -20,10 +19,10 @@ export const roleReducer = createReducer(
     isLoading: false,
     roles: roles,
   })),
-  on(RolesActions.getRolesFailure, (state: any, action: any) => ({
+  on(RolesActions.getRolesFailure, (state: any, { error }) => ({
     ...state,
     isLoading: false,
-    error: action.error,
+    error: error,
   })),
   on(RolesActions.getRole, (state: any) => ({ ...state, isLoading: true })),
   on(RolesActions.addRole, (state: any) => ({
@@ -49,10 +48,10 @@ export const roleReducer = createReducer(
       isLoading: false,
     };
   }),
-  on(RolesActions.addEditRoleFailure, (state: any, action: any) => ({
+  on(RolesActions.addEditRoleFailure, (state: any, { error }) => ({
     ...state,
     isLoading: false,
-    error: action.error,
+    error: error,
   })),
   on(RolesActions.deleteRole, (state: any) => ({
     ...state,

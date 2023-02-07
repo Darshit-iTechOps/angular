@@ -1,15 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
 import * as RoleActions from '@actions/roles.action';
-import {
-  EMPTY,
-  catchError,
-  concatMap,
-  exhaustMap,
-  map,
-  mergeMap,
-  of,
-} from 'rxjs';
+import { catchError, concatMap, exhaustMap, map, mergeMap, of } from 'rxjs';
 import { RoleService } from '@services/role.service';
 
 @Injectable()
@@ -23,7 +15,7 @@ export class RolesEffect {
         return this.service.RolesResponse().pipe(
           map((roles) => RoleActions.getRolesSuccess(roles)),
           catchError((error) =>
-            of(RoleActions.getRolesFailure({ error: error.message }))
+            of(RoleActions.addEditRoleFailure(error.message))
           )
         );
       })
@@ -37,7 +29,7 @@ export class RolesEffect {
         return this.service.RoleRequest(role).pipe(
           map((data) => RoleActions.addRoleSuccess(data)),
           catchError((error) =>
-            of(RoleActions.addEditRoleFailure({ error: error.message }))
+            of(RoleActions.addEditRoleFailure(error.message))
           )
         );
       })
@@ -51,7 +43,7 @@ export class RolesEffect {
         return this.service.RoleRequest(role).pipe(
           map((data) => RoleActions.editRoleSuccess(data)),
           catchError((error) =>
-            of(RoleActions.addEditRoleFailure({ error: error.message }))
+            of(RoleActions.addEditRoleFailure(error.message))
           )
         );
       })
@@ -65,7 +57,7 @@ export class RolesEffect {
         return this.service.DeleteRequest(roleID).pipe(
           map(() => RoleActions.deleteRoleSuccess(roleID)),
           catchError((error) =>
-            of(RoleActions.addEditRoleFailure({ error: error.message }))
+            of(RoleActions.addEditRoleFailure(error.message))
           )
         );
       })

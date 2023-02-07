@@ -10,14 +10,18 @@ export const initialState: LoginState = {
 
 export const loginReducer = createReducer(
   initialState,
-  on(LoginActions.loginResponseSuccess, (state: any, action: any) => ({
-    ...state,
-    isLoading: false,
-    response: action.response,
+  on(LoginActions.loginRequest,(state:any)=>({
+     ...state,
+    isLoading: true,
   })),
-  on(LoginActions.loginResponseFailure, (state: any, action: any) => ({
+  on(LoginActions.loginResponseSuccess, (state: any, { response }) => ({
     ...state,
     isLoading: false,
-    error: action.error,
+    response: response,
+  })),
+  on(LoginActions.loginResponseFailure, (state: any, { error }) => ({
+    ...state,
+    isLoading: false,
+    error: error,
   }))
 );

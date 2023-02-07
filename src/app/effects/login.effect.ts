@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { catchError, map, mergeMap, of, tap } from 'rxjs';
+import { catchError, concatMap, map, of, tap } from 'rxjs';
 import * as LoginActions from '@actions/login.action';
 import { LoginService } from '@services/login.service';
 import { StorageHelper } from '@helpers/StorageHelper.helper';
@@ -32,11 +32,11 @@ export class LoginEffect {
   loginRequest$ = createEffect(() =>
     this.action$.pipe(
       ofType(LoginActions.loginRequest),
-      mergeMap((action) => {
-        return this.service.LoginRequest(action.login).pipe(
-          map((response) => LoginActions.loginResponseSuccess({ response })),
+      concatMap(({login}) => {
+        return this.service.LoginRequest(login).pipe(
+          map((response) => LoginActions.loginResponseSuccess(response)),
           catchError((error) =>
-            of(LoginActions.loginResponseFailure({ error: error.message }))
+            of(LoginActions.loginResponseFailure(error.message))
           )
         );
       })

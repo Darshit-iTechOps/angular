@@ -34,6 +34,8 @@ import { loginReducer } from '@reducers/login.reducer';
 import { LoginEffect } from '@effects/login.effect';
 import { HrRoleFormComponent } from '@components/dashboard/hr-dashboard/forms/hr-role-form/hr-role-form.component';
 import { HrEmployeesComponent } from './components/dashboard/hr-dashboard/hr-employees/hr-employees.component';
+import { employeeReducer } from '@reducers/employee.reducer';
+import { EmployeeEffect } from '@effects/employee.effect';
 
 @NgModule({
   declarations: [
@@ -60,13 +62,17 @@ import { HrEmployeesComponent } from './components/dashboard/hr-dashboard/hr-emp
     FormsModule,
     ReactiveFormsModule,
     EffectsModule.forRoot({}),
-    StoreModule.forRoot({ roles: roleReducer, login: loginReducer }),
+    StoreModule.forRoot({
+      roles: roleReducer,
+      login: loginReducer,
+      employee: employeeReducer,
+    }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: !isDevMode(),
       autoPause: true,
     }),
-    EffectsModule.forFeature([LoginEffect, RolesEffect]),
+    EffectsModule.forFeature([LoginEffect, RolesEffect, EmployeeEffect]),
   ],
   providers: [
     RoleService,

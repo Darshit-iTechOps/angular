@@ -1,5 +1,5 @@
 import { Role, Roles } from '@models/roles.model';
-import { createAction, props } from '@ngrx/store';
+import { createAction } from '@ngrx/store';
 
 export const getRoles = createAction('[Role] Get Roles');
 export const getRolesSuccess = createAction(
@@ -8,7 +8,7 @@ export const getRolesSuccess = createAction(
 );
 export const getRolesFailure = createAction(
   '[Role] Get Roles failure',
-  props<{ error: string }>()
+  (error: string) => ({ error })
 );
 
 export const getRole = createAction('[Role] Get Role');
@@ -33,7 +33,7 @@ export const editRoleSuccess = createAction(
 
 export const addEditRoleFailure = createAction(
   '[Role] Get Role Response Fail',
-  props<{ error: string }>()
+  (error: string) => ({ error })
 );
 
 export const deleteRole = createAction(
@@ -45,4 +45,3 @@ export const deleteRoleSuccess = createAction(
   '[Role] Delete role Success',
   (roleID: number) => ({ roleID })
 );
-

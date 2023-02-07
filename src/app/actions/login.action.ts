@@ -1,15 +1,15 @@
 import { Login, LoginResponse } from '@models/login.model';
-import { createAction, props } from '@ngrx/store';
+import { createAction } from '@ngrx/store';
 
 export const loginRequest = createAction(
   '[Login] Get Login Request',
-  props<{ login: Login }>()
+  (login: Login) => ({ login })
 );
 export const loginResponseSuccess = createAction(
   '[LoginResponse] Get Login Response Success',
-  props<{ response: LoginResponse }>()
+  (response: LoginResponse) => ({ response })
 );
 export const loginResponseFailure = createAction(
   '[LoginResponse] Get Login Response Fail',
-  props<{ error: string }>()
+  (error: string) => ({ error })
 );

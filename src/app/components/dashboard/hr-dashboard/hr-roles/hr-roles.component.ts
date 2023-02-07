@@ -12,7 +12,7 @@ import { AppState } from '../../../../app.state';
 import { select } from '@ngrx/store';
 import {
   errorSelector,
-  isLoadingSelector,
+  isRoleLoadingSelector,
   rolesSelector,
 } from '@selectors/roles.selector';
 import { Role, Roles } from '@models/roles.model';
@@ -25,7 +25,9 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: ['./hr-roles.component.scss'],
 })
 export class HrRolesComponent implements OnInit, AfterViewInit {
-  isLoading$: Observable<boolean> = this.store.pipe(select(isLoadingSelector));
+  isLoading$: Observable<boolean> = this.store.pipe(
+    select(isRoleLoadingSelector)
+  );
   error$: Observable<string | null> = this.store.pipe(select(errorSelector));
   roles$: Observable<Role[]> = this.store.pipe(select(rolesSelector));
   displayedColumns: string[] = ['roleID', 'name', 'action'];

@@ -2,6 +2,7 @@
   <mat-card class="box">
     <mat-card-header class="header">
       <mat-card-title>Login</mat-card-title>
+      <div *ngIf="error$ | async" [ngStyle]="{color:'red'}">{{error$ | async}}</div>
     </mat-card-header>
     <form class="form" (ngSubmit)="authLogin()" [noValidate]="false">
       <mat-card-content class="body">
@@ -19,6 +20,7 @@
         </mat-form-field>
       </mat-card-content>
       <button mat-stroked-button color="primary" class="btn-block">Login</button>
+      <div *ngIf="isLoading$ | async">Loading...</div>
     </form>
     <!-- TODO: add register when the app grows -->
     <!-- <a routerLink="register">Register</a> -->

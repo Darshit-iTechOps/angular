@@ -5,7 +5,7 @@
     <app-hr-role-form [title]="title" [role]="role" (dataEvent)="receiveData($event)"></app-hr-role-form>
   </ng-template>
 
-  <div *ngIf="error$ | async">{{error$}}</div>
+  <div *ngIf="error$ | async">{{error$ | async}}</div>
   <div *ngIf="isLoading$ | async">Loading...</div>
   <br />
   <div class="btn-container">
