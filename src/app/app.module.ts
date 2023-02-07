@@ -32,7 +32,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { RolesEffect } from '@effects/roles.effect';
 import { loginReducer } from '@reducers/login.reducer';
 import { LoginEffect } from '@effects/login.effect';
-import { HrRoleFormComponent } from './components/dashboard/hr-dashboard/forms/hr-role-form/hr-role-form.component';
+import { HrRoleFormComponent } from '@components/dashboard/hr-dashboard/forms/hr-role-form/hr-role-form.component';
 
 @NgModule({
   declarations: [
