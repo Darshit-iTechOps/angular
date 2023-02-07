@@ -2,6 +2,13 @@
 
 ## STATUS : **IN PROGRESS** - **Update** : Added Ngrx Store and layout  
 
+## QUICK INFO
+**LOGIN DETAILS - Auto generated account**
+---
+  Email: john@mail.com
+  Password: doe100
+---
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.1.1.
 
 ## Development server

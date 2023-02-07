@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as RoleActions from '@actions/roles.action';
-import { Observable, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AppState } from '../../../../app.state';
 import { select } from '@ngrx/store';
 import {
@@ -19,7 +19,6 @@ import { Role, Roles } from '@models/roles.model';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-
 @Component({
   selector: 'app-hr-roles',
   templateUrl: './hr-roles.component.html',

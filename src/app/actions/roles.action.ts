@@ -42,6 +42,7 @@ export const deleteRole = createAction(
 );
 
 export const deleteRoleSuccess = createAction(
-  '[Role] Delete role',
+  '[Role] Delete role Success',
   (roleID: number) => ({ roleID })
 );
+
