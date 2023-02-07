@@ -45,6 +45,10 @@ export class HrRolesComponent implements OnInit, AfterViewInit {
     this.roles$.subscribe({ next: (role) => (this.dataSource.data = role) });
   }
 
+  receiveData(role: Roles) {
+    this.saveRole(role);
+  }
+
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
   }
@@ -56,10 +60,10 @@ export class HrRolesComponent implements OnInit, AfterViewInit {
     this.role.name = role.name;
   }
 
-  saveRole(): void {
-    this.role.roleID === 0
-      ? this.store.dispatch(RoleActions.addRole(this.role))
-      : this.store.dispatch(RoleActions.editRole(this.role));
+  saveRole(role: Roles): void {
+    role.roleID === 0
+      ? this.store.dispatch(RoleActions.addRole(role))
+      : this.store.dispatch(RoleActions.editRole(role));
     this.role = new Roles();
   }
 

@@ -33,6 +33,7 @@ import { RolesEffect } from '@effects/roles.effect';
 import { loginReducer } from '@reducers/login.reducer';
 import { LoginEffect } from '@effects/login.effect';
 import { HrRoleFormComponent } from '@components/dashboard/hr-dashboard/forms/hr-role-form/hr-role-form.component';
+import { HrEmployeesComponent } from './components/dashboard/hr-dashboard/hr-employees/hr-employees.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { HrRoleFormComponent } from '@components/dashboard/hr-dashboard/forms/hr
     HrRolesComponent,
     HrManagersComponent,
     HrRoleFormComponent,
+    HrEmployeesComponent,
   ],
   imports: [
     BrowserModule,
