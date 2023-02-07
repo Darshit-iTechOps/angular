@@ -31,7 +31,7 @@ namespace testproject.api.Controllers
 
     [HttpPost]
     [Authorize(Roles = "Manager, HR")]
-    public IActionResult CreateEditEmployee(CreateEditRoleRequest request)
+    public IActionResult AddEditEmployee(CreateEditRoleRequest request)
     {
       var role = Request(request);
       service.CreateEditRole(role);
@@ -42,9 +42,17 @@ namespace testproject.api.Controllers
       );
     }
 
+    [HttpDelete("{id:int}")]
+    [Authorize(Roles = "Manager, HR")]
+    public IActionResult DeleteRole(int id)
+    {
+      service.DeleteRole(id);
+      return Ok();
+    }
+
     [NonAction]
     private static new Role Request(CreateEditRoleRequest request) =>
       new Role(request.RoleID, request.Name);
-    }
+  }
 
 }

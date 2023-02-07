@@ -25,4 +25,9 @@ export class RoleService {
     const url = `${environment.apiUrl}/${this.url}`;
     return this.http.post<Role>(url, role, httpOptions);
   }
+
+  public DeleteRequest(id: number): Observable<any> {
+    const url = `${environment.apiUrl}/${this.url}/${id}`;
+    return this.http.delete<any>(url);
+  }
 }

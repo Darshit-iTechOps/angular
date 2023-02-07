@@ -1,10 +1,27 @@
 <app-hr-dashboard>
-  <!-- <p>hr-roles works!</p> -->
+
+  <!-- TODO: Refactor the modal template form to move to new file -->
+  <ng-template #modal>
+    <h2 mat-dialog-title>{{title}} Role</h2>
+    <mat-dialog-content class="mat-typography">
+      <form class="form">
+        <mat-form-field [style.fontSize.px]="14">
+          <input matInput type="text" id="name" name="name" [(ngModel)]="role.name" required validation
+            placeholder="Role Name" />
+        </mat-form-field>
+      </form>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="saveRole()">Save</button>
+    </mat-dialog-actions>
+  </ng-template>
+
   <div *ngIf="error$ | async">{{error$}}</div>
   <div *ngIf="isLoading$ | async">Loading...</div>
   <br />
   <div class="btn-container">
-    <button mat-raised-button color="success" class="btn-block">Add Role</button>
+    <button mat-raised-button class="btn-block" (click)="openDialog(modal)">Add Role</button>
   </div>
   <br />
 
@@ -24,8 +41,9 @@
       <ng-container matColumnDef="action">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let role">
-          <button>Edit</button>
-          <button>Delete</button>
+          <button mat-flat-button color="primary" [ngStyle]="{marginRight:'10px'}"
+            (click)="editRole(modal, role)">Edit</button>
+          <button mat-flat-button color="warn" (click)="deleteRole(role.roleID)">Delete</button>
         </td>
       </ng-container>
 
@@ -33,11 +51,10 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 
     </table>
+
+    <!-- TODO: Move to global for access to other tables than recreating same element -->
     <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons aria-label="Select page of roles">
     </mat-paginator>
   </div>
 
-  <!-- <div *ngFor="let role of roles$ | async">
-    {{role.name}}
-  </div> -->
 </app-hr-dashboard>
