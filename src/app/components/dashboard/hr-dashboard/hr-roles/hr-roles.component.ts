@@ -16,9 +16,11 @@ import {
   rolesSelector,
 } from '@selectors/roles.selector';
 import { Role, Roles } from '@models/roles.model';
-import { MatPaginator } from '@angular/material/paginator';
+// import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
+import { PaginatorComponent } from 'src/app/global/components/paginator/paginator.component';
+
 @Component({
   selector: 'app-hr-roles',
   templateUrl: './hr-roles.component.html',
@@ -34,10 +36,11 @@ export class HrRolesComponent implements OnInit, AfterViewInit {
   isSelectedForUpdate: boolean = false;
   title: string = 'Add';
   role: Roles = new Roles();
-
+  label: string = 'roles';
   dataSource = new MatTableDataSource();
 
-  @ViewChild(MatPaginator) paginator: any = MatPaginator;
+  @ViewChild(PaginatorComponent) paginator: PaginatorComponent =
+    new PaginatorComponent();
   @ViewChild('modal', { static: true }) modal: any = TemplateRef;
 
   constructor(private store: Store<AppState>, public dialog: MatDialog) {}
@@ -45,6 +48,7 @@ export class HrRolesComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.store.dispatch(RoleActions.getRoles());
     this.roles$.subscribe({ next: (role) => (this.dataSource.data = role) });
+    this.paginator.label = this.label;
   }
 
   receiveData(role: Roles) {
@@ -52,7 +56,7 @@ export class HrRolesComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator = this.paginator.paginator;
   }
 
   editRole(templateRef: TemplateRef<any>, role: Role): void {

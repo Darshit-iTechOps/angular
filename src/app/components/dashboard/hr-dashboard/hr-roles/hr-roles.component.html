@@ -1,6 +1,5 @@
 <app-hr-dashboard>
 
-  <!-- TODO: Refactor the modal template form to move to new file -->
   <ng-template #modal>
     <app-hr-role-form [title]="title" [role]="role" (dataEvent)="receiveData($event)"></app-hr-role-form>
   </ng-template>
@@ -40,9 +39,7 @@
 
     </table>
 
-    <!-- TODO: Move to global for access to other tables than recreating same element -->
-    <mat-paginator [pageSizeOptions]="[5,10,20]" showFirstLastButtons aria-label="Select page of roles">
-    </mat-paginator>
+    <app-paginator></app-paginator>
   </div>
 
 </app-hr-dashboard>
