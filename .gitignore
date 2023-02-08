@@ -42,3 +42,12 @@ testem.log
 Thumbs.db
 
 .angular
+/backend/.vscode/*
+/backend/.vs/*
+/backend/testproject.api/.config
+/backend/testproject.api/bin/Debug/*
+/backend/testproject.api/bin/Release/*
+/backend/testproject.api/Properties/PublishProfiles/*
+/backend/testproject.models/bin/*
+/backend/testproject.api/obj/**/*
+/backend/testproject.models/obj/**/*
