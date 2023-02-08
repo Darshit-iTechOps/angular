@@ -36,6 +36,7 @@ import { HrRoleFormComponent } from '@components/dashboard/hr-dashboard/forms/hr
 import { HrEmployeesComponent } from './components/dashboard/hr-dashboard/hr-employees/hr-employees.component';
 import { employeeReducer } from '@reducers/employee.reducer';
 import { EmployeeEffect } from '@effects/employee.effect';
+import { PaginatorComponent } from './global/components/paginator/paginator.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +53,7 @@ import { EmployeeEffect } from '@effects/employee.effect';
     HrManagersComponent,
     HrRoleFormComponent,
     HrEmployeesComponent,
+    PaginatorComponent,
   ],
   imports: [
     BrowserModule,
