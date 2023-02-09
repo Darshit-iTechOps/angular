@@ -5,22 +5,19 @@ import {
   ViewChild,
   TemplateRef,
 } from '@angular/core';
-import { Store } from '@ngrx/store';
-import * as RoleActions from '@actions/roles.action';
+import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from '../../../../app.state';
-import { select } from '@ngrx/store';
 import {
   errorSelector,
   isRoleLoadingSelector,
   rolesSelector,
 } from '@selectors/roles.selector';
 import { Role, Roles } from '@models/roles.model';
-// import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { PaginatorComponent } from 'src/app/global/components/paginator/paginator.component';
-
+import * as RoleActions from '@actions/roles.action';
 @Component({
   selector: 'app-hr-roles',
   templateUrl: './hr-roles.component.html',
@@ -51,12 +48,12 @@ export class HrRolesComponent implements OnInit, AfterViewInit {
     this.paginator.label = this.label;
   }
 
-  receiveData(role: Roles) {
-    this.saveRole(role);
-  }
-
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator.paginator;
+  }
+
+  receiveData(role: Roles) {
+    this.saveRole(role);
   }
 
   editRole(templateRef: TemplateRef<any>, role: Role): void {

@@ -1,1 +1,72 @@
-<p>hr-employees works!</p>
+<app-hr-dashboard>
+
+  <ng-template #modal>
+    <!-- <app-hr-role-form [title]="title" [role]="role" (dataEvent)="receiveData($event)"></app-hr-role-form> -->
+  </ng-template>
+
+  <div *ngIf="employeeError$ | async">{{employeeError$ | async}}</div>
+  <div *ngIf="isEmployeeLoading$ | async">Loading...</div>
+  <br />
+  <div class="btn-container">
+    <button mat-raised-button class="btn-block" (click)="openDialog(modal)">Add Employee</button>
+  </div>
+  <br />
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="empId">
+        <th mat-header-cell *matHeaderCellDef> Id </th>
+        <td mat-cell *matCellDef="let employee">{{employee.empId}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="fullName">
+        <th mat-header-cell *matHeaderCellDef> Full Name </th>
+        <td mat-cell *matCellDef="let employee">{{employee.firstName}} {{employee.lastName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef> Role </th>
+        <td mat-cell *matCellDef="let employee">{{employee.role.name}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let employee">{{employee.email}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="telNo">
+        <th mat-header-cell *matHeaderCellDef> Tel No. </th>
+        <td mat-cell *matCellDef="let employee">{{employee.telNo}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="manager">
+        <th mat-header-cell *matHeaderCellDef> Manager </th>
+        <td mat-cell *matCellDef="let employee">{{employee.firstName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="department">
+        <th mat-header-cell *matHeaderCellDef> Dept. </th>
+        <td mat-cell *matCellDef="let employee">{{employee.lastName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let employee">{{employee.status}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let employee">
+          <button mat-flat-button color="primary" [ngStyle]="{marginRight:'10px'}"
+            (click)="editEmployee(modal, employee)">Edit</button>
+          <button mat-flat-button color="warn" (click)="deleteEmployee(employee.empId)">Delete</button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    </table>
+    <app-paginator></app-paginator>
+  </div>
+
+</app-hr-dashboard>
