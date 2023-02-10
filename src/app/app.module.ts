@@ -69,7 +69,7 @@ import { HrEmployeeFormComponent } from './components/dashboard/hr-dashboard/for
     StoreModule.forRoot({
       roles: roleReducer,
       login: loginReducer,
-      employee: employeeReducer,
+      employees: employeeReducer,
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,

@@ -5,5 +5,5 @@ import { RoleState } from '@models/roles.model';
 export interface AppState {
   readonly roles: RoleState;
   readonly login: LoginState;
-  readonly employeeState: EmployeeState;
+  readonly employees: EmployeeState;
 }

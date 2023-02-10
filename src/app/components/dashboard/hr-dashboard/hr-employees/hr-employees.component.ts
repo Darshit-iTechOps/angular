@@ -70,15 +70,14 @@ export class HrEmployeesComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.store.dispatch(RoleActions.getRoles());
     this.store.dispatch(EmployeeActions.getEmployees());
-    this.employees$.subscribe({
-      next: (employees) => (this.dataSource.data = employees),
-    });
     this.paginator.label = this.label;
   }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator.paginator;
-    console.log(this.employees$);
+    this.employees$.subscribe({
+      next: (employees) => (this.dataSource.data = employees),
+    });
   }
 
   @ViewChild(PaginatorComponent) paginator: PaginatorComponent =

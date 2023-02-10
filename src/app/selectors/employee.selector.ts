@@ -1,7 +1,8 @@
 import { AppState } from '../app.state';
 import { createSelector } from '@ngrx/store';
 
-export const selectFeature = (state: AppState) => state.employeeState;
+export const selectFeature = (state: AppState) => state.employees;
+
 export const isEmployeeLoadingSelector = createSelector(
   selectFeature,
   (state) => state.isLoading
