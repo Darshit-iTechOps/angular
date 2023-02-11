@@ -36,8 +36,10 @@ import { HrRoleFormComponent } from '@components/dashboard/hr-dashboard/forms/hr
 import { HrEmployeesComponent } from './components/dashboard/hr-dashboard/hr-employees/hr-employees.component';
 import { employeeReducer } from '@reducers/employee.reducer';
 import { EmployeeEffect } from '@effects/employee.effect';
-import { PaginatorComponent } from './global/components/paginator/paginator.component';
-import { HrEmployeeFormComponent } from './components/dashboard/hr-dashboard/forms/hr-employee-form/hr-employee-form.component';
+import { PaginatorComponent } from '@global/components/paginator/paginator.component';
+import { HrEmployeeFormComponent } from '@components/dashboard/hr-dashboard/forms/hr-employee-form/hr-employee-form.component';
+import { HrDepartmentsComponent } from '@components/dashboard/hr-dashboard/hr-departments/hr-departments.component';
+import { HrDepartmentFormComponent } from '@components/dashboard/hr-dashboard/forms/hr-department-form/hr-department-form.component';
 
 @NgModule({
   declarations: [
@@ -56,6 +58,8 @@ import { HrEmployeeFormComponent } from './components/dashboard/hr-dashboard/for
     HrEmployeesComponent,
     PaginatorComponent,
     HrEmployeeFormComponent,
+    HrDepartmentsComponent,
+    HrDepartmentFormComponent,
   ],
   imports: [
     BrowserModule,

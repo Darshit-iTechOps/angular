@@ -13,7 +13,8 @@
       "@actions/*": ["./src/app/actions/*"],
       "@reducers/*": ["./src/app/reducers/*"],
       "@selectors/*": ["./src/app/selectors/*"],
-      "@effects/*": ["./src/app/effects/*"]
+      "@effects/*": ["./src/app/effects/*"],
+      "@global/*": ["./src/app/global/*"]
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
