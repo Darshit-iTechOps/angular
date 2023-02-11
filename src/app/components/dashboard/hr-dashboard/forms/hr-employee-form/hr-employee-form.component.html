@@ -1,1 +1,73 @@
-<p>hr-employee-form works!</p>
+<h2 mat-dialog-title>{{title}} Role</h2>
+<mat-dialog-content class="mat-typography">
+  <form class="form" [noValidate]="false">
+    <mat-form-field [style.fontSize.px]="14">
+      <input matInput type="text" id="firstName" name="firstName" [(ngModel)]="employee.firstName" required validation
+        placeholder="First Name" />
+    </mat-form-field>
+    <mat-form-field [style.fontSize.px]="14">
+      <input matInput type="text" id="lastName" name="lastName" [(ngModel)]="employee.lastName" required validation
+        placeholder="Last Name" />
+    </mat-form-field>
+
+    <mat-form-field [style.fontSize.px]="14">
+      <mat-select placeholder="Choose Role" [formControl]="selectionControl" [(ngModel)]="employee.roleID" required>
+        <mat-option *ngFor="let role of roles | async" [value]="role.roleID">
+          {{role.name}}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="selectionControl.hasError('required')">Required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field [style.fontSize.px]="14">
+      <input matInput id="email" name="email" [(ngModel)]="employee.email" placeholder="Email"
+        [formControl]="emailFormControl" [errorStateMatcher]="matcher" (change)="handleChange()" />
+      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+        Please enter a valid email address
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">Email is <strong>required</strong></mat-error>
+    </mat-form-field>
+
+    <mat-form-field [style.fontSize.px]="14">
+      <input matInput type="password" id="password" name="password" [(ngModel)]="employee.password" required validation
+        placeholder="Password" (change)="handleChange()" />
+    </mat-form-field>
+
+    <mat-form-field [style.fontSize.px]="14">
+      <input matInput type="text" id="telNo" name="telNo" [(ngModel)]="employee.telNo" [value]="000-000-0000" required
+        validation placeholder="Mobile Number" />
+    </mat-form-field>
+
+    <mat-form-field [style.fontSize.px]="14">
+      <mat-select placeholder="Choose Manager" [formControl]="selectionControl" [(ngModel)]="employee.managerId"
+        required>
+        <mat-option value={{null}}>--None--</mat-option>
+        <!-- TODO: add managers list -->
+      </mat-select>
+      <mat-error *ngIf="selectionControl.hasError('required')">Required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field [style.fontSize.px]="14">
+      <mat-select placeholder="Choose Department" [formControl]="selectionControl" [(ngModel)]="employee.deptId"
+        required>
+        <mat-option value={{null}}>--None--</mat-option>
+        <!-- TODO: add department list -->
+      </mat-select>
+      <mat-error *ngIf="selectionControl.hasError('required')">Required</mat-error>
+    </mat-form-field>
+    <!--TODO: Add Status Selection -->
+
+    <mat-form-field [style.fontSize.px]="14">
+      <mat-select placeholder="Choose Status" [formControl]="selectionControl" [(ngModel)]="employee.status" required>
+        <mat-option value={{true}}>Active</mat-option>
+        <mat-option value={{false}}>In-Active</mat-option>
+      </mat-select>
+      <mat-error *ngIf="selectionControl.hasError('required')">Required</mat-error>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="saveEmployee()">Save</button>
+</mat-dialog-actions>

@@ -1,6 +1,6 @@
 <h2 mat-dialog-title>{{title}} Role</h2>
 <mat-dialog-content class="mat-typography">
-  <form class="form">
+  <form class="form" [noValidate]="false">
     <mat-form-field [style.fontSize.px]="14">
       <input matInput type="text" id="name" name="name" [(ngModel)]="role.name" required validation
         placeholder="Role Name" />

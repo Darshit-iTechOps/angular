@@ -1,7 +1,8 @@
 <app-hr-dashboard>
 
   <ng-template #modal>
-    <!-- <app-hr-role-form [title]="title" [role]="role" (dataEvent)="receiveData($event)"></app-hr-role-form> -->
+    <app-hr-employee-form [title]="title" [employee]="employee" [roles]="roles$" (dataEvent)="receiveData($event)">
+    </app-hr-employee-form>
   </ng-template>
 
   <div *ngIf="employeeError$ | async">{{employeeError$ | async}}</div>

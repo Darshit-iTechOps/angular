@@ -113,10 +113,12 @@ public class EmployeesController : ControllerBase
 
     _employeeService.CreateEditEmployee(id, employee);
     var response = EmpResponse(employee);
+    if (response != null)
+      _employeeService.AssignAuto(response.EmpId, response.Role.RoleID);
 
     return CreatedAtAction(
         nameof(GetAllEmployee),
-        routeValues: new { id = employee.EmpId },
+        routeValues: new { id = response?.EmpId },
         response
     );
   }

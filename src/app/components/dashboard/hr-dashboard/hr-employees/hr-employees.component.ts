@@ -68,8 +68,8 @@ export class HrEmployeesComponent implements OnInit, AfterViewInit {
   constructor(private store: Store<AppState>, public dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.store.dispatch(RoleActions.getRoles());
     this.store.dispatch(EmployeeActions.getEmployees());
+    this.store.dispatch(RoleActions.getRoles());
     this.paginator.label = this.label;
   }
 
@@ -89,6 +89,7 @@ export class HrEmployeesComponent implements OnInit, AfterViewInit {
   }
 
   saveEmployee(employee: Employee): void {
+    console.log(employee);
     // employee.empId === 0
     //   ? this.store.dispatch(EmployeeActions.addEmployee(employee))
     //   : this.store.dispatch(EmployeeActions.editEmployee(employee));
