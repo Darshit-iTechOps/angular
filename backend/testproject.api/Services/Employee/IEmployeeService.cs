@@ -9,4 +9,5 @@ public interface IEmployeeService
   List<Employee> GetAllEmployees();
   void CreateEditEmployee(int id, Employee employee);
   void AssignAuto(int id, int roleID);
+  void DeleteEmployee(int id);
 }

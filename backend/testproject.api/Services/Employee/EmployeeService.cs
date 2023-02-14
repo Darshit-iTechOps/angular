@@ -57,5 +57,13 @@ public class EmployeeService : IEmployeeService
       _context.SaveChanges();
     }
   }
+
+  public void DeleteEmployee(int id)
+  {
+    var employee = GetEmployee(id);
+    if (_context.Employees.Any(e => e.EmpId == id))
+      _context.Remove(employee);
+    _context.SaveChanges();
+  }
 }
 

@@ -31,7 +31,7 @@ namespace testproject.api.Controllers
 
     [HttpPost]
     [Authorize(Roles = "Manager, HR")]
-    public IActionResult AddEditEmployee(CreateEditRoleRequest request)
+    public IActionResult AddEditRole(CreateEditRoleRequest request)
     {
       var role = Request(request);
       service.CreateEditRole(role);

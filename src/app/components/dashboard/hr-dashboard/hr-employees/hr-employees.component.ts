@@ -89,16 +89,33 @@ export class HrEmployeesComponent implements OnInit, AfterViewInit {
   }
 
   saveEmployee(employee: Employee): void {
+    if (employee.empId == undefined) {
+      employee.empId = 0;
+    }
+    if (employee.telNo == undefined) {
+      employee.telNo = '000-000-0000';
+    }
+    employee.status = employee.status ? true : false;
     console.log(employee);
-    // employee.empId === 0
-    //   ? this.store.dispatch(EmployeeActions.addEmployee(employee))
-    //   : this.store.dispatch(EmployeeActions.editEmployee(employee));
+    employee.empId === 0
+      ? this.store.dispatch(
+          EmployeeActions.addEmployee(employee.empId, employee)
+        )
+      : this.store.dispatch(
+          EmployeeActions.editEmployee(employee.empId, employee)
+        );
     this.employee = {} as Employee;
   }
 
-  editEmployee(templateRef: TemplateRef<any>, employee: Employee): void {}
+  editEmployee(templateRef: TemplateRef<any>, employee: Employee): void {
+    this.isSelectedForUpdate = true;
+    this.openDialog(templateRef);
+    this.employee = employee;
+  }
 
-  deleteEmployee(id: number): void {}
+  deleteEmployee(id: number): void {
+    this.store.dispatch(EmployeeActions.deleteEmployee(id));
+  }
 
   openDialog(templateRef: TemplateRef<any>) {
     this.employee = {} as Employee;

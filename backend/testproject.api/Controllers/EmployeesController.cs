@@ -35,7 +35,7 @@ public class EmployeesController : ControllerBase
   public IActionResult GetSingleEmployee(int id)
   {
     Employee employee = _employeeService.GetEmployee(id);
-    EmployeeResponse response = EmpResponse(employee);
+    var response = EmpResponse(employee);
     return Ok(response);
   }
 
@@ -112,15 +112,23 @@ public class EmployeesController : ControllerBase
       employee = CreateEmployee(request);
 
     _employeeService.CreateEditEmployee(id, employee);
-    var response = EmpResponse(employee);
-    if (response != null)
-      _employeeService.AssignAuto(response.EmpId, response.Role.RoleID);
+    var response = _employeeService.GetEmployee(employee.EmpId);
+    if (response.RoleID == 2 || response.RoleID == 3)
+      _employeeService.AssignAuto(response.EmpId, response.RoleID);
 
     return CreatedAtAction(
-        nameof(GetAllEmployee),
+        nameof(GetSingleEmployee),
         routeValues: new { id = response?.EmpId },
         response
     );
+  }
+
+  [HttpDelete("{id:int}")]
+  [Authorize(Roles = "Manager, HR")]
+  public IActionResult DeleteEmployee(int id)
+  {
+    _employeeService.DeleteEmployee(id);
+    return Ok();
   }
 
   [NonAction]
@@ -133,44 +141,42 @@ public class EmployeesController : ControllerBase
       Email = request.Email,
       TelNo = request.TelNo,
       RoleID = request.RoleID,
-      Password = "Mypass123",
-      ManagerId = request.ManagerId,
-      DeptId = request.DeptId,
-      Status = true
-    };
-  }
-  [NonAction]
-  private static Employee UpdateEmployee(int id, CreateEditEmployeeRequest request)
-  {
-    return new Employee
-    {
-      EmpId = id,
-      FirstName = request.FirstName,
-      LastName = request.LastName,
-      Email = request.Email,
-      TelNo = request.TelNo,
-      RoleID = request.RoleID,
-      Password = request.Password,
-      ManagerId = request.ManagerId,
-      DeptId = request.DeptId,
+      Password = request.Password == "" ? "myPass123" : request.Password,
+      ManagerId = request.ManagerId == 0 ? null : request.ManagerId,
+      DeptId = request.DeptId == 0 ? null : request.ManagerId,
       Status = request.Status
     };
   }
+  [NonAction]
+  private static Employee UpdateEmployee(int id, CreateEditEmployeeRequest request) =>
+  new Employee
+  {
+    EmpId = id,
+    FirstName = request.FirstName,
+    LastName = request.LastName,
+    Email = request.Email,
+    TelNo = request.TelNo,
+    RoleID = request.RoleID,
+    Password = request.Password,
+    ManagerId = request.ManagerId == 0 ? null : request.ManagerId,
+    DeptId = request.DeptId == 0 ? null : request.ManagerId,
+    Status = request.Status
+  };
 
   [NonAction]
-  private static EmployeeResponse EmpResponse(Employee employee)
-  {
-    return new EmployeeResponse(
-        employee.EmpId,
-        employee.FirstName,
-        employee.LastName,
-        employee.TelNo,
-        employee.Email,
-        employee.Password,
-        new RoleResponse(employee.Role.RoleID, employee.Role.Name),
-        employee.ManagerId,
-        employee.DeptId,
-        employee.Status
+  private static EmployeePartialResponse EmpResponse(Employee employee) =>
+  new EmployeePartialResponse(
+          employee.EmpId,
+          employee.FirstName,
+          employee.LastName,
+          employee.TelNo,
+          employee.Email,
+          new RoleResponse(
+            employee.Role.RoleID,
+            employee.Role.Name
+            ),
+          employee.ManagerId,
+          employee.DeptId,
+          employee.Status
     );
-  }
 }

@@ -29,4 +29,46 @@ export class EmployeeEffect {
       })
     )
   );
+
+  addEmployee$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(EmployeeActions.addEmployee),
+      concatMap(({ empId, employee }) => {
+        return this.service.EmployeeRequest(empId, employee).pipe(
+          map((employee) => EmployeeActions.addEmployeeSuccess(employee)),
+          catchError((error) =>
+            of(EmployeeActions.getEmployeesFailure(error.message))
+          )
+        );
+      })
+    )
+  );
+
+  editEmployee$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(EmployeeActions.editEmployee),
+      concatMap(({ empId, employee }) => {
+        return this.service.EmployeeRequest(empId, employee).pipe(
+          map((employee) => EmployeeActions.editEmployeeSuccess(employee)),
+          catchError((error) =>
+            of(EmployeeActions.getEmployeesFailure(error.message))
+          )
+        );
+      })
+    )
+  );
+
+  deleteEmployee$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(EmployeeActions.deleteEmployee),
+      mergeMap(({ empId }) => {
+        return this.service.DeleteRequest(empId).pipe(
+          map(() => EmployeeActions.deleteEmployeeSuccess(empId)),
+          catchError((error) =>
+            of(EmployeeActions.getEmployeesFailure(error.message))
+          )
+        );
+      })
+    )
+  );
 }

@@ -1,6 +1,3 @@
-using testproject.models.Departments;
-using testproject.models.Roles;
-
 namespace testproject.models.Employees;
 
 public record EmployeeResponse(
@@ -10,7 +7,7 @@ public record EmployeeResponse(
     string TelNo,
     string Email,
     string Password,
-    RoleResponse Role,
+    int RoleID,
     int? ManagerId,
     int? DeptId,
     bool Status

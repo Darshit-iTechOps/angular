@@ -34,14 +34,14 @@
     </mat-form-field>
 
     <mat-form-field [style.fontSize.px]="14">
-      <input matInput type="text" id="telNo" name="telNo" [(ngModel)]="employee.telNo" [value]="000-000-0000" required
-        validation placeholder="Mobile Number" />
+      <input matInput type="text" id="telNo" name="telNo" [(ngModel)]="employee.telNo" required validation
+        placeholder="Mobile Number" />
     </mat-form-field>
 
     <mat-form-field [style.fontSize.px]="14">
       <mat-select placeholder="Choose Manager" [formControl]="selectionControl" [(ngModel)]="employee.managerId"
         required>
-        <mat-option value={{null}}>--None--</mat-option>
+        <mat-option value={{0}}>--None--</mat-option>
         <!-- TODO: add managers list -->
       </mat-select>
       <mat-error *ngIf="selectionControl.hasError('required')">Required</mat-error>
@@ -50,12 +50,11 @@
     <mat-form-field [style.fontSize.px]="14">
       <mat-select placeholder="Choose Department" [formControl]="selectionControl" [(ngModel)]="employee.deptId"
         required>
-        <mat-option value={{null}}>--None--</mat-option>
+        <mat-option value={{0}}>--None--</mat-option>
         <!-- TODO: add department list -->
       </mat-select>
       <mat-error *ngIf="selectionControl.hasError('required')">Required</mat-error>
     </mat-form-field>
-    <!--TODO: Add Status Selection -->
 
     <mat-form-field [style.fontSize.px]="14">
       <mat-select placeholder="Choose Status" [formControl]="selectionControl" [(ngModel)]="employee.status" required>
