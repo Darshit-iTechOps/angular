@@ -11,7 +11,9 @@
     </mat-form-field>
 
     <mat-form-field [style.fontSize.px]="14">
-      <mat-select placeholder="Choose Role" [formControl]="selectionControl" [(ngModel)]="employee.roleID" required>
+      <mat-select placeholder="Choose Role" [formControl]="selectionControl" [(ngModel)]="employee.roleID" 
+      [value]="employee.roleID"
+      required>
         <mat-option *ngFor="let role of roles | async" [value]="role.roleID">
           {{role.name}}
         </mat-option>
@@ -40,8 +42,9 @@
 
     <mat-form-field [style.fontSize.px]="14">
       <mat-select placeholder="Choose Manager" [formControl]="selectionControl" [(ngModel)]="employee.managerId"
-        required>
-        <mat-option value={{0}}>--None--</mat-option>
+        [value]="employee.managerId"  
+      required>
+        <mat-option [value]="0">--None--</mat-option>
         <!-- TODO: add managers list -->
       </mat-select>
       <mat-error *ngIf="selectionControl.hasError('required')">Required</mat-error>
@@ -49,17 +52,19 @@
 
     <mat-form-field [style.fontSize.px]="14">
       <mat-select placeholder="Choose Department" [formControl]="selectionControl" [(ngModel)]="employee.deptId"
-        required>
-        <mat-option value={{0}}>--None--</mat-option>
+      [value]="employee.deptId"  
+      required>
+        <mat-option [value]="0">--None--</mat-option>
         <!-- TODO: add department list -->
       </mat-select>
       <mat-error *ngIf="selectionControl.hasError('required')">Required</mat-error>
     </mat-form-field>
 
     <mat-form-field [style.fontSize.px]="14">
-      <mat-select placeholder="Choose Status" [formControl]="selectionControl" [(ngModel)]="employee.status" required>
-        <mat-option value={{true}}>Active</mat-option>
-        <mat-option value={{false}}>In-Active</mat-option>
+      <mat-select placeholder="Choose Status" [formControl]="selectionControl" [(ngModel)]="employee.status"
+        [value]="employee.status" required>
+        <mat-option [value]="true">Active</mat-option>
+        <mat-option [value]="false">In-Active</mat-option>
       </mat-select>
       <mat-error *ngIf="selectionControl.hasError('required')">Required</mat-error>
     </mat-form-field>

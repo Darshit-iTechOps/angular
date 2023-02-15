@@ -123,6 +123,16 @@ public class EmployeesController : ControllerBase
     );
   }
 
+  [HttpPut("{id:int}")]
+  [Authorize(Roles = "Manager, HR")]
+  public IActionResult UpdateEmployeeStatus(int id)
+  {
+    var employee = _employeeService.GetEmployee(id);
+    employee.Status = !employee.Status;
+    _employeeService.UpdateEmployeeStatus(employee);
+    return Ok(employee);
+  }
+
   [HttpDelete("{id:int}")]
   [Authorize(Roles = "Manager, HR")]
   public IActionResult DeleteEmployee(int id)

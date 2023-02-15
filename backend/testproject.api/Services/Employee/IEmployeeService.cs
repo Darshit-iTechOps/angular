@@ -8,6 +8,7 @@ public interface IEmployeeService
   Employee GetEmployee(int id);
   List<Employee> GetAllEmployees();
   void CreateEditEmployee(int id, Employee employee);
+  void UpdateEmployeeStatus(Employee employee);
   void AssignAuto(int id, int roleID);
   void DeleteEmployee(int id);
 }

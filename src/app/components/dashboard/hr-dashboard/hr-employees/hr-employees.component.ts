@@ -89,13 +89,13 @@ export class HrEmployeesComponent implements OnInit, AfterViewInit {
   }
 
   saveEmployee(employee: Employee): void {
-    if (employee.empId == undefined) {
-      employee.empId = 0;
-    }
+    // if (employee.empId == undefined) {
+    //   employee.empId = 0;
+    // }
     if (employee.telNo == undefined) {
       employee.telNo = '000-000-0000';
     }
-    employee.status = employee.status ? true : false;
+    // employee.status = employee.status ? true : false;
     console.log(employee);
     employee.empId === 0
       ? this.store.dispatch(
@@ -111,6 +111,11 @@ export class HrEmployeesComponent implements OnInit, AfterViewInit {
     this.isSelectedForUpdate = true;
     this.openDialog(templateRef);
     this.employee = employee;
+  }
+
+  changeStatus(id: number): void {
+    // TODO: FiX the data feedback
+    this.store.dispatch(EmployeeActions.updateEmployeeStatus(id));
   }
 
   deleteEmployee(id: number): void {

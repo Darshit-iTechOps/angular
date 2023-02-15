@@ -58,6 +58,22 @@ export class EmployeeEffect {
     )
   );
 
+  updateEmployeeStatus$ = createEffect(() =>
+    this.action$.pipe(
+      ofType(EmployeeActions.updateEmployeeStatus),
+      concatMap(({ empId }) => {
+        return this.service.UpdateEmployeeStatus(empId).pipe(
+          map((employee) =>
+            EmployeeActions.updateEmployeeStatusSuccess(employee)
+          ),
+          catchError((error) =>
+            of(EmployeeActions.getEmployeesFailure(error.message))
+          )
+        );
+      })
+    )
+  );
+
   deleteEmployee$ = createEffect(() =>
     this.action$.pipe(
       ofType(EmployeeActions.deleteEmployee),

@@ -29,7 +29,17 @@ export const addEmployeeSuccess = createAction(
 );
 
 export const editEmployeeSuccess = createAction(
-  '[Employee]  Edit Employee Success',
+  '[Employee] Edit Employee Success',
+  (employee: Employee) => ({ employee })
+);
+
+export const updateEmployeeStatus = createAction(
+  '[Employee] Update Employee Status',
+  (empId: number) => ({ empId })
+);
+
+export const updateEmployeeStatusSuccess = createAction(
+  '[Employee] Update Employee Status Success',
   (employee: Employee) => ({ employee })
 );
 

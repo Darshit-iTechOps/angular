@@ -26,6 +26,11 @@ export class EmployeeService {
     return this.http.post<Employee>(url, employee, httpOptions);
   }
 
+  public UpdateEmployeeStatus(id: number): Observable<Employee> {
+    const url = `${environment.apiUrl}/${this.url}/${id}`;
+    return this.http.put<Employee>(url, httpOptions);
+  }
+
   public DeleteRequest(id: number): Observable<any> {
     const url = `${environment.apiUrl}/${this.url}/${id}`;
     return this.http.delete<any>(url);

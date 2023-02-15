@@ -58,6 +58,11 @@ public class EmployeeService : IEmployeeService
     }
   }
 
+  public void UpdateEmployeeStatus(Employee employee)
+  {
+    _context.Update(employee);
+    _context.SaveChanges();
+  }
   public void DeleteEmployee(int id)
   {
     var employee = GetEmployee(id);
