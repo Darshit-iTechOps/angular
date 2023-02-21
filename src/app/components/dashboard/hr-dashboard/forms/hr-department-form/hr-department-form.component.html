@@ -1,1 +1,31 @@
-<p>hr-department-form works!</p>
+<h2 mat-dialog-title>{{title}} Department</h2>
+<mat-dialog-content class="mat-typography">
+  <form class="form" [formGroup]="departmentForm" [noValidate]="false">
+
+    <mat-form-field [style.fontSize.px]="14">
+      <input matInput type="text" id="name" name="name" formControlName="name" required validation
+        placeholder="Department Name" />
+    </mat-form-field>
+
+    <mat-form-field [style.fontSize.px]="14">
+      <mat-select placeholder="Choose Manager" formControlName="managerId" validation required>
+        <mat-option [value]="0">--None--</mat-option>
+        <mat-option *ngFor="let manager of managers | async" [value]="manager.managerId">
+          {{manager.employee.firstName}} {{manager.employee.lastName}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field [style.fontSize.px]="14">
+      <mat-select placeholder="Choose Status" formControlName="status" validation required>
+        <mat-option [value]="true">Active</mat-option>
+        <mat-option [value]="false">In-Active</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button [mat-dialog-close]="true" cdkFocusInitial (click)="saveDepartment()">Save</button>
+</mat-dialog-actions>

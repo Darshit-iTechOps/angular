@@ -7,6 +7,7 @@ import { DashboardComponent } from '@components/dashboard/dashboard.component';
 import { HrRolesComponent } from '@components/dashboard/hr-dashboard/hr-roles/hr-roles.component';
 import { HrManagersComponent } from '@components/dashboard/hr-dashboard/hr-managers/hr-managers.component';
 import { HrEmployeesComponent } from '@components/dashboard/hr-dashboard/hr-employees/hr-employees.component';
+import { HrDepartmentsComponent } from '@components/dashboard/hr-dashboard/hr-departments/hr-departments.component';
 
 const routes: Routes = [
   { path: '', component: LoginComponent },
@@ -19,6 +20,7 @@ const routes: Routes = [
       { path: 'hr/roles', component: HrRolesComponent },
       { path: 'hr/managers', component: HrManagersComponent },
       { path: 'hr/employees', component: HrEmployeesComponent },
+      { path: 'hr/departments', component: HrDepartmentsComponent },
     ],
   },
 ];
@@ -35,4 +37,5 @@ export const routedComponents = [
   DashboardComponent,
   HrRolesComponent,
   HrManagersComponent,
+  HrDepartmentsComponent,
 ];

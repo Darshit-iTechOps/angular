@@ -1,0 +1,6 @@
+<div class="container" [style]="{marginTop:'10px'}">
+  <mat-form-field>
+    <mat-label>Filter</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Search here" #input />
+  </mat-form-field>
+</div>

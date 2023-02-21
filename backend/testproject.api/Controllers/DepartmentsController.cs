@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using testproject.api.Models;
 using testproject.api.Services;
 using testproject.models.Departments;
+using testproject.models.Employees;
 
 namespace testproject.api.Controllers;
 
@@ -20,7 +21,8 @@ public class DepartmentsController : ControllerBase
   public IActionResult GetAllDepartments()
   {
     List<Department> departments = _departmentService.GetAllDepartments();
-    return Ok(departments);
+    var list = GetListResponse(departments);
+    return Ok(list);
   }
 
   [HttpGet("{id:int}")]
@@ -39,19 +41,31 @@ public class DepartmentsController : ControllerBase
   {
     var department = new Department();
     if (id != 0)
-      department = UpdateEmployee(id, request);
+      department = UpdateDepartment(id, request);
     else
-      department = CreateEmployee(request);
+      department = CreateDepartment(request);
 
     _departmentService.CreateEditDepartment(id, department);
-
-    var response = GetResponse(department);
+    var newDepartment = _departmentService.GetDepartment(id);
+    var response = GetResponse(newDepartment);
     return CreatedAtAction(
         nameof(GetAllDepartments),
-        routeValues: new { id = department.DeptId },
+        routeValues: new { id = response.DeptId },
         response
     );
   }
+
+  [HttpPut("{id:int}")]
+  [Authorize(Roles = "Manager, HR")]
+  public IActionResult UpdateDepartmentStatus(int id)
+  {
+    var department = _departmentService.GetDepartment(id);
+    department.Status = !department.Status;
+    _departmentService.UpdateDepartmentStatus(department);
+    var response = GetResponse(department);
+    return Ok(response);
+  }
+
   [NonAction]
   private static DepartmentResponse GetResponse(Department department)
   {
@@ -59,10 +73,52 @@ public class DepartmentsController : ControllerBase
         department.DeptId,
         department.Name,
         department.ManagerId,
+    new ManagerResponse(
+      (int)department.ManagerId,
+       new EmployeePartialResponse(
+        department.Manager.Employee.EmpId,
+        department.Manager.Employee.FirstName,
+        department.Manager.Employee.LastName,
+        department.Manager.Employee.TelNo,
+        department.Manager.Employee.Email,
+        null,
+        department.Manager.Employee?.ManagerId,
+        department.Manager.Employee?.DeptId,
+        department.Manager.Employee.Status)
+    ),
         department.Status);
   }
+
   [NonAction]
-  private static Department CreateEmployee(CreateEditDepartmentRequest request)
+  private static List<DepartmentResponse> GetListResponse(List<Department> departments)
+  {
+    var list = new List<DepartmentResponse>();
+    foreach (var department in departments)
+    {
+      list.Add(new DepartmentResponse(
+        department.DeptId,
+        department.Name,
+        department.ManagerId,
+    new ManagerResponse(
+      (int)department.ManagerId,
+       new EmployeePartialResponse(
+        department.Manager.Employee.EmpId,
+        department.Manager.Employee.FirstName,
+        department.Manager.Employee.LastName,
+        department.Manager.Employee.TelNo,
+        department.Manager.Employee.Email,
+        null,
+        department.Manager.Employee?.ManagerId,
+        department.Manager.Employee?.DeptId,
+        department.Manager.Employee.Status)
+    ),
+        department.Status));
+    }
+    return list;
+  }
+
+  [NonAction]
+  private static Department CreateDepartment(CreateEditDepartmentRequest request)
   {
     return new Department
     {
@@ -72,7 +128,7 @@ public class DepartmentsController : ControllerBase
     };
   }
   [NonAction]
-  private static Department UpdateEmployee(int id, CreateEditDepartmentRequest request)
+  private static Department UpdateDepartment(int id, CreateEditDepartmentRequest request)
   {
     return new Department
     {
@@ -82,4 +138,6 @@ public class DepartmentsController : ControllerBase
       Status = request.Status
     };
   }
+
+
 }

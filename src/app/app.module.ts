@@ -40,6 +40,11 @@ import { PaginatorComponent } from '@global/components/paginator/paginator.compo
 import { HrEmployeeFormComponent } from '@components/dashboard/hr-dashboard/forms/hr-employee-form/hr-employee-form.component';
 import { HrDepartmentsComponent } from '@components/dashboard/hr-dashboard/hr-departments/hr-departments.component';
 import { HrDepartmentFormComponent } from '@components/dashboard/hr-dashboard/forms/hr-department-form/hr-department-form.component';
+import { FilterComponent } from './global/components/filter/filter.component';
+import { ManagerEffect } from '@effects/manager.effect';
+import { managerReducer } from '@reducers/manager.reducer';
+import { departmentReducer } from '@reducers/department.reducer';
+import { DepartmentEffect } from '@effects/department.effect';
 
 @NgModule({
   declarations: [
@@ -60,6 +65,7 @@ import { HrDepartmentFormComponent } from '@components/dashboard/hr-dashboard/fo
     HrEmployeeFormComponent,
     HrDepartmentsComponent,
     HrDepartmentFormComponent,
+    FilterComponent,
   ],
   imports: [
     BrowserModule,
@@ -74,13 +80,21 @@ import { HrDepartmentFormComponent } from '@components/dashboard/hr-dashboard/fo
       roles: roleReducer,
       login: loginReducer,
       employees: employeeReducer,
+      managers: managerReducer,
+      departments: departmentReducer,
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: !isDevMode(),
       autoPause: true,
     }),
-    EffectsModule.forFeature([LoginEffect, RolesEffect, EmployeeEffect]),
+    EffectsModule.forFeature([
+      LoginEffect,
+      RolesEffect,
+      EmployeeEffect,
+      ManagerEffect,
+      DepartmentEffect,
+    ]),
   ],
   providers: [
     RoleService,

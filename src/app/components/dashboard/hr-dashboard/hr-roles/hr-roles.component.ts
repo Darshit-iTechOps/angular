@@ -18,6 +18,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { PaginatorComponent } from 'src/app/global/components/paginator/paginator.component';
 import * as RoleActions from '@actions/roles.action';
+import { MatSort } from '@angular/material/sort';
+import { FilterComponent } from '@global/components/filter/filter.component';
 @Component({
   selector: 'app-hr-roles',
   templateUrl: './hr-roles.component.html',
@@ -39,6 +41,8 @@ export class HrRolesComponent implements OnInit, AfterViewInit {
   @ViewChild(PaginatorComponent) paginator: PaginatorComponent =
     new PaginatorComponent();
   @ViewChild('modal', { static: true }) modal: any = TemplateRef;
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(FilterComponent) filter = new FilterComponent();
 
   constructor(private store: Store<AppState>, public dialog: MatDialog) {}
 
@@ -50,6 +54,8 @@ export class HrRolesComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator.paginator;
+    this.dataSource.sort = this.sort;
+    this.filter.dataSource = this.dataSource;
   }
 
   receiveData(role: Roles) {

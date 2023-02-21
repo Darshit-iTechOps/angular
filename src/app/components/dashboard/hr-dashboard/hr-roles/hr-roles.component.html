@@ -12,6 +12,8 @@
   </div>
   <br />
 
+  <app-filter></app-filter>
+  <br />
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource">
 
@@ -30,7 +32,8 @@
         <td mat-cell *matCellDef="let role">
           <button mat-flat-button color="primary" [ngStyle]="{marginRight:'10px'}"
             (click)="editRole(modal, role)">Edit</button>
-          <button mat-flat-button color="warn" (click)="deleteRole(role.roleID)">Delete</button>
+          <!-- Add or remove to own adjustments -->
+          <!-- <button mat-flat-button color="warn" (click)="deleteRole(role.roleID)">Delete</button> -->
         </td>
       </ng-container>
 

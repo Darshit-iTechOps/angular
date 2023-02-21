@@ -113,7 +113,7 @@ public class EmployeesController : ControllerBase
 
     _employeeService.CreateEditEmployee(id, employee);
     var response = _employeeService.GetEmployee(employee.EmpId);
-    if (response.RoleID == 2 || response.RoleID == 3)
+    if (id == 0 && (response.RoleID == 2 || response.RoleID == 3))
       _employeeService.AssignAuto(response.EmpId, response.RoleID);
 
     return CreatedAtAction(
@@ -153,7 +153,7 @@ public class EmployeesController : ControllerBase
       RoleID = request.RoleID,
       Password = request.Password == "" ? "myPass123" : request.Password,
       ManagerId = request.ManagerId == 0 ? null : request.ManagerId,
-      DeptId = request.DeptId == 0 ? null : request.ManagerId,
+      DeptId = request.DeptId == 0 ? null : request.DeptId,
       Status = request.Status
     };
   }
@@ -169,7 +169,7 @@ public class EmployeesController : ControllerBase
     RoleID = request.RoleID,
     Password = request.Password,
     ManagerId = request.ManagerId == 0 ? null : request.ManagerId,
-    DeptId = request.DeptId == 0 ? null : request.ManagerId,
+    DeptId = request.DeptId == 0 ? null : request.DeptId,
     Status = request.Status
   };
 

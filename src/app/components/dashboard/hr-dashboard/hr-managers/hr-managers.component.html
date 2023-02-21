@@ -1,3 +1,51 @@
 <app-hr-dashboard>
-  <p>hr-managers works!</p>
+  <div *ngIf="error$ | async">{{error$ | async}}</div>
+  <div *ngIf="isManagerLoading$ | async">Loading...</div>
+
+  <app-filter></app-filter>
+  <br>
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <ng-container matColumnDef="managerId">
+        <th mat-header-cell *matHeaderCellDef> Manager ID </th>
+        <td mat-cell *matCellDef="let manager">{{manager.managerId}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="empId">
+        <th mat-header-cell *matHeaderCellDef> Emp ID </th>
+        <td mat-cell *matCellDef="let manager">{{manager.empId}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="fullName">
+        <th mat-header-cell *matHeaderCellDef> Full Name </th>
+        <td mat-cell *matCellDef="let manager">{{manager.employee.firstName}} {{manager.employee.lastName}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <td mat-cell *matCellDef="let manager">{{manager.employee.email}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="telNo">
+        <th mat-header-cell *matHeaderCellDef> Tel No. </th>
+        <td mat-cell *matCellDef="let manager">{{manager.employee.telNo}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="department">
+        <th mat-header-cell *matHeaderCellDef> Dept. </th>
+        <td mat-cell *matCellDef="let manager">{{manager.employee.department !== null ? null : null }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let manager">{{manager.employee.status ? 'Active': 'In-Active'}}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+
+    </table>
+    <app-paginator></app-paginator>
+  </div>
 </app-hr-dashboard>

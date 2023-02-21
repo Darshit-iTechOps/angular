@@ -24,13 +24,26 @@ import {
 import { Role, Roles } from '@models/roles.model';
 import * as RoleActions from '@actions/roles.action';
 import * as EmployeeActions from '@actions/employee.action';
+import * as ManagerActions from '@actions/manager.action';
+import * as DepartmentActions from '@actions/department.action';
 import { Employee } from '@models/employee.model';
+import { MatSort } from '@angular/material/sort';
+import { FilterComponent } from '@global/components/filter/filter.component';
+import {
+  errorManagerSelector,
+  isManagerLoadingSelector,
+  managersSelector,
+} from '@selectors/manager.selector';
+import { departmentsSelector } from '@selectors/department.selector';
+import { Manager } from '@models/manager.model';
+import { Department } from '@models/department.model';
 @Component({
   selector: 'app-hr-employees',
   templateUrl: './hr-employees.component.html',
   styleUrls: ['./hr-employees.component.scss'],
 })
 export class HrEmployeesComponent implements OnInit, AfterViewInit {
+  // Roles Section
   isRolesLoading$: Observable<boolean> = this.store.pipe(
     select(isRoleLoadingSelector)
   );
@@ -38,6 +51,17 @@ export class HrEmployeesComponent implements OnInit, AfterViewInit {
     select(errorSelector)
   );
   roles$: Observable<Role[]> = this.store.pipe(select(rolesSelector));
+
+  // Manager Section
+  isManagersLoading$: Observable<boolean> = this.store.pipe(
+    select(isManagerLoadingSelector)
+  );
+  managerError$: Observable<string | null> = this.store.pipe(
+    select(errorManagerSelector)
+  );
+  managers$: Observable<Manager[]> = this.store.pipe(select(managersSelector));
+
+  // Employee Section
   isEmployeeLoading$: Observable<boolean> = this.store.pipe(
     select(isEmployeeLoadingSelector)
   );
@@ -47,6 +71,12 @@ export class HrEmployeesComponent implements OnInit, AfterViewInit {
   employees$: Observable<Employee[]> = this.store.pipe(
     select(employeesSelector)
   );
+
+  // Department Section
+  departments$: Observable<Department[]> = this.store.pipe(
+    select(departmentsSelector)
+  );
+
   isSelectedForUpdate: boolean = false;
   title: string = 'Add';
   role: Roles = new Roles();
@@ -67,36 +97,34 @@ export class HrEmployeesComponent implements OnInit, AfterViewInit {
 
   constructor(private store: Store<AppState>, public dialog: MatDialog) {}
 
+  @ViewChild(PaginatorComponent) paginator: PaginatorComponent =
+    new PaginatorComponent();
+  @ViewChild('modal', { static: true }) modal: any = TemplateRef;
+  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(FilterComponent) filter = new FilterComponent();
+
   ngOnInit(): void {
     this.store.dispatch(EmployeeActions.getEmployees());
     this.store.dispatch(RoleActions.getRoles());
+    this.store.dispatch(ManagerActions.getManagers());
+    this.store.dispatch(DepartmentActions.getDepartments());
     this.paginator.label = this.label;
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator.paginator;
     this.employees$.subscribe({
       next: (employees) => (this.dataSource.data = employees),
     });
+    this.dataSource.paginator = this.paginator.paginator;
+    this.dataSource.sort = this.sort;
+    this.filter.dataSource = this.dataSource;
   }
-
-  @ViewChild(PaginatorComponent) paginator: PaginatorComponent =
-    new PaginatorComponent();
-  @ViewChild('modal', { static: true }) modal: any = TemplateRef;
 
   receiveData(employee: Employee) {
     this.saveEmployee(employee);
   }
 
   saveEmployee(employee: Employee): void {
-    // if (employee.empId == undefined) {
-    //   employee.empId = 0;
-    // }
-    if (employee.telNo == undefined) {
-      employee.telNo = '000-000-0000';
-    }
-    // employee.status = employee.status ? true : false;
-    console.log(employee);
     employee.empId === 0
       ? this.store.dispatch(
           EmployeeActions.addEmployee(employee.empId, employee)
@@ -114,7 +142,6 @@ export class HrEmployeesComponent implements OnInit, AfterViewInit {
   }
 
   changeStatus(id: number): void {
-    // TODO: FiX the data feedback
     this.store.dispatch(EmployeeActions.updateEmployeeStatus(id));
   }
 

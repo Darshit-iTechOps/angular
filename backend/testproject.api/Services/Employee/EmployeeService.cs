@@ -10,23 +10,29 @@ public class EmployeeService : IEmployeeService
   public EmployeeService(DataContext context) => _context = context;
   public List<Employee> GetAllEmployees() =>
    _context.Employees.Where(u => u.RoleID == u.Role.RoleID
-     && u.DeptId == u.Department.DeptId)
+     && u.DeptId == u.Department.DeptId
+     && u.ManagerId == u.Manager.ManagerId)
     .Include(u => u.Role)
     .Include(u => u.Department)
+    .Include(u => u.Manager.Employee)
     .ToList();
 
   public Employee GetEmployee(int id) =>
     _context.Employees.Where(u => u.RoleID == u.Role.RoleID
-     && u.DeptId == u.Department.DeptId)
+     && u.DeptId == u.Department.DeptId
+     && u.ManagerId == u.Manager.ManagerId)
     .Include(u => u.Role)
     .Include(u => u.Department)
+    .Include(u => u.Manager.Employee)
     .FirstOrDefault((employee) => employee.EmpId == id);
 
   public Employee GetCurrentUser(string email, string password) =>
     _context.Employees.Where(u => u.RoleID == u.Role.RoleID
-    && u.DeptId == u.Department.DeptId)
+    && u.DeptId == u.Department.DeptId
+    && u.ManagerId == u.Manager.ManagerId)
    .Include(u => u.Role)
    .Include(u => u.Department)
+   .Include(u => u.Manager.Employee)
    .FirstOrDefault((employee) => employee.Email == email && employee.Password == password);
 
   public void CreateEditEmployee(int id, Employee employee)
