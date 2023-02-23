@@ -9,3 +9,10 @@ public record DepartmentResponse(
     ManagerResponse Manager,
     bool Status
 );
+
+public record DepartmentFullResponse(
+    int DeptId,
+    string Name,
+    int ManagerId,
+    bool Status
+);

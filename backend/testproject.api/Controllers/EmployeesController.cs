@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using testproject.api.Models;
 using testproject.api.Services;
+using testproject.models.Departments;
 using testproject.models.Employees;
 using testproject.models.Roles;
 
@@ -27,15 +28,16 @@ public class EmployeesController : ControllerBase
   public IActionResult GetAllEmployee()
   {
     List<Employee> employees = _employeeService.GetAllEmployees();
-    return Ok(employees);
+    var response = EmpResponse(employees);
+    return Ok(response);
   }
 
   [HttpGet("{id:int}")]
   [Authorize(Roles = "Employee, Manager, HR")]
   public IActionResult GetSingleEmployee(int id)
   {
-    Employee employee = _employeeService.GetEmployee(id);
-    var response = EmpResponse(employee);
+    Employee employees = _employeeService.GetEmployee(id);
+    var response = EmpResponse(employees);
     return Ok(response);
   }
 
@@ -173,20 +175,82 @@ public class EmployeesController : ControllerBase
     Status = request.Status
   };
 
+
   [NonAction]
-  private static EmployeePartialResponse EmpResponse(Employee employee) =>
-  new EmployeePartialResponse(
-          employee.EmpId,
-          employee.FirstName,
-          employee.LastName,
-          employee.TelNo,
-          employee.Email,
-          new RoleResponse(
-            employee.Role.RoleID,
-            employee.Role.Name
-            ),
-          employee.ManagerId,
-          employee.DeptId,
-          employee.Status
-    );
+  private EmployeeFullResponse EmpResponse(Employee employee)
+  {
+    var manager = new Manager();
+    if (employee.ManagerId != null)
+      manager = _managerService.GetSingleManager((int)employee.ManagerId);
+
+    return new EmployeeFullResponse(
+        employee.EmpId,
+        employee.FirstName,
+        employee.LastName,
+        employee.TelNo,
+        employee.Email,
+        employee.Password,
+        new RoleResponse(
+          employee.Role.RoleID,
+          employee.Role.Name
+          ),
+        new ManagerFullResponse(
+          manager?.ManagerId ?? 0,
+          manager?.Employee?.FirstName ?? "",
+          manager?.Employee?.LastName ?? "",
+          manager?.Employee?.Email ?? "",
+          manager?.Employee?.TelNo ?? "",
+          manager?.Employee?.Status ?? false
+          ),
+        new DepartmentFullResponse(
+          employee.Department?.DeptId ?? 0,
+          employee.Department?.Name ?? "",
+          employee.Department?.ManagerId ?? 0,
+          employee.Department?.Status ?? false
+          ),
+        employee.Status
+      );
+  }
+    
+
+  [NonAction]
+  private List<EmployeeFullResponse> EmpResponse(List<Employee> employees)
+  {
+    var list = new List<EmployeeFullResponse>();
+    foreach (var employee in employees)
+    {
+      var manager = new Manager();
+      if (employee.ManagerId != null)
+         manager = _managerService.GetSingleManager((int)employee.ManagerId);
+
+      list.Add(new EmployeeFullResponse(
+        employee.EmpId,
+        employee.FirstName,
+        employee.LastName,
+        employee.TelNo,
+        employee.Email,
+        employee.Password,
+        new RoleResponse(
+          employee.Role.RoleID,
+          employee.Role.Name
+          ),
+        new ManagerFullResponse(
+          manager?.ManagerId ?? 0,
+          manager?.Employee?.FirstName ?? "",
+          manager?.Employee?.LastName ?? "",
+          manager?.Employee?.Email ?? "",
+          manager?.Employee?.TelNo ?? "",
+          manager?.Employee?.Status ?? false
+          ),
+        new DepartmentFullResponse(
+          employee.Department?.DeptId ?? 0,
+          employee.Department?.Name ?? "",
+          employee.Department?.ManagerId ?? 0,
+          employee.Department?.Status ?? false
+          ),
+        employee.Status
+      ));
+    }
+    return list;
+  }
 }

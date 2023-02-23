@@ -23,7 +23,7 @@ public class DepartmentService : IDepartmentService
    .Where(d => d.ManagerId == d.Manager.ManagerId
    && d.Manager.EmpId == d.Manager.Employee.EmpId)
   .Include(d => d.Manager)
-  .Include(d => d.Manager.Employee)
+   .Include(d => d.Manager.Employee)
   .FirstOrDefault((department) => department.DeptId == id);
 
   public void CreateEditDepartment(int id, Department department)
